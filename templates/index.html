@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Informasi Alfamart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Sistem Informasi Alfamart</h1>
+            <nav>
+                <ul>
+                    <li><a href="#" class="tab-link active" data-tab="dashboard">Dashboard</a></li>
+                    <li><a href="#" class="tab-link" data-tab="manajemen">Manajemen</a></li>
+                    <li><a href="#" class="tab-link" data-tab="ppic">PPIC</a></li>
+                    <li><a href="#" class="tab-link" data-tab="inventory">Inventory</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Dashboard Tab -->
+            <div id="dashboard" class="tab-content active">
+                <h2>Dashboard Utama</h2>
+                <div class="kpi-cards">
+                    <div class="kpi-card">
+                        <h3>Total Penjualan</h3>
+                        <p id="total-sales">Rp 0</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Inventory Value</h3>
+                        <p id="inventory-value">Rp 0</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Growth Rate</h3>
+                        <p id="growth-rate">0%</p>
+                    </div>
+                    <div class="kpi-card">
+                        <h3>Top Product</h3>
+                        <p id="top-product">-</p>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <h3>Tren Penjualan</h3>
+                        <canvas id="sales-trend-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Forecasting Penjualan</h3>
+                        <canvas id="sales-forecast-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Analisis ABC Inventory</h3>
+                        <canvas id="abc-analysis-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Inventory Turnover</h3>
+                        <canvas id="inventory-turnover-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Manajemen Tab -->
+            <div id="manajemen" class="tab-content">
+                <h2>Departemen Manajemen</h2>
+                <div class="controls">
+                    <button id="generate-report">Generate Laporan Bulanan</button>
+                    <button id="analyze-performance">Analisis Kinerja</button>
+                </div>
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <h3>Kinerja Bulanan</h3>
+                        <canvas id="performance-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Analisis Profitabilitas</h3>
+                        <canvas id="profitability-chart"></canvas>
+                    </div>
+                </div>
+                <div class="data-table">
+                    <h3>Data Kinerja</h3>
+                    <table id="performance-table">
+                        <thead>
+                            <tr>
+                                <th>Bulan</th>
+                                <th>Penjualan</th>
+                                <th>Biaya</th>
+                                <th>Profit</th>
+                                <th>Margin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PPIC Tab -->
+            <div id="ppic" class="tab-content">
+                <h2>Perencanaan dan Pengendalian Inventory</h2>
+                <div class="controls">
+                    <button id="calculate-eoq">Hitung EOQ</button>
+                    <button id="calculate-rop">Hitung ROP</button>
+                    <button id="optimize-inventory">Optimasi Inventory</button>
+                </div>
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <h3>EOQ Analysis</h3>
+                        <canvas id="eoq-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Demand Pattern</h3>
+                        <canvas id="demand-pattern-chart"></canvas>
+                    </div>
+                </div>
+                <div class="data-table">
+                    <h3>Rekomendasi Pemesanan</h3>
+                    <table id="ordering-table">
+                        <thead>
+                            <tr>
+                                <th>Produk</th>
+                                <th>EOQ</th>
+                                <th>ROP</th>
+                                <th>Safety Stock</th>
+                                <th>Frekuensi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Inventory Tab -->
+            <div id="inventory" class="tab-content">
+                <h2>Manajemen Gudang</h2>
+                <div class="controls">
+                    <button id="update-stock">Update Stock</button>
+                    <button id="check-expiry">Cek Kadaluarsa</button>
+                    <button id="generate-inventory-report">Generate Laporan</button>
+                </div>
+                <div class="charts-container">
+                    <div class="chart-wrapper">
+                        <h3>Stock Level</h3>
+                        <canvas id="stock-level-chart"></canvas>
+                    </div>
+                    <div class="chart-wrapper">
+                        <h3>Aging Inventory</h3>
+                        <canvas id="aging-inventory-chart"></canvas>
+                    </div>
+                </div>
+                <div class="data-table">
+                    <h3>Status Inventory</h3>
+                    <table id="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Produk</th>
+                                <th>Stock</th>
+                                <th>Nilai</th>
+                                <th>Turnover</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
